@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - The Coffee Corner</title>
+
+    <link rel="icon" type="image/png" href="/images/logo_icon/faviconM.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="module" crossorigin src="/assets/checkout-ByieBwKt.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/utils-BdbU3szs.js">
+    <link rel="modulepreload" crossorigin href="/assets/maps-api-W5OxXTI8.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-Bt7GKAB5.css">
+  </head>
+  <body>
+    <header></header>
+
+    <main class="page-container">
+      <h1>Checkout</h1>
+      <form id="checkout-form">
+        <div class="checkout-grid">
+          <div class="checkout-form-column">
+            <div id="order-summary" class="order-summary-box">
+              <h3>Order Summary</h3>
+              <p>Subtotal: <span id="subtotal-display"></span></p>
+              <p id="tax-row">Tax (8%): <span id="tax-display"></span></p>
+              <p id="shipping-row">Shipping: <span id="shipping-display"></span></p>
+              <p class="order-total">Total: <span id="total-display"></span></p>
+            </div>
+            
+            <div class="customer-info-box">
+              <h3>Customer Information</h3>
+              <div class="form-group">
+                <label for="full-name">Full Name *</label>
+                <input type="text" id="full-name" name="fullName" required placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="your.email@example.com" />
+              </div>
+            </div>
+
+            <div id="address-section" class="customer-info-box">
+                <h3>Delivery Address</h3>
+                <div class="form-group">
+                    <label for="street-address">Street Address *</label>
+                    <input type="text" id="street-address" name="streetAddress" placeholder="123 Brew Lane" required />
+                </div>
+                <div class="form-group">
+                    <label for="city">City *</label>
+                    <input type="text" id="city" name="city" placeholder="Universal City" required />
+                </div>
+                <div class="form-group">
+                    <label for="state">State *</label>
+                    <input type="text" id="state" name="state" placeholder="TX" required />
+                </div>
+                <div class="form-group">
+                    <label for="zip">Zip Code *</label>
+                    <input type="text" id="zip" name="zip" placeholder="78148" required />
+                </div>
+                <p id="delivery-message"></p>
+            </div>
+            
+            <div class="payment-box">
+                <h3>Payment Information</h3>
+                </div>
+          </div>
+          
+          <div class="checkout-details-column">
+            <div class="pickup-delivery-toggle">
+                <h3>Delivery Method</h3>
+                <div class="toggle-buttons">
+                    <button type="button" class="toggle-btn active" id="delivery-toggle" data-method="delivery">Delivery</button>
+                    <button type="button" class="toggle-btn" id="pickup-toggle" data-method="pickup">Pickup</button>
+                </div>
+            </div>
+
+            <div id="availability-section" class="checkout-card">
+              <h4>Select Date</h4>
+              <p class="availability-subtitle">Select your desired pickup or delivery date. Booked days are disabled.</p>
+              <div id="calendar-container"></div>
+            </div>
+
+            <div id="map-container" class="checkout-card">
+              <h4>Delivery Area</h4>
+              <p class="delivery-area-info">Check if your address is within our delivery zone.</p>
+              <div class="map-embed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3470.400159986274!2d-98.34443998936655!3d29.562958175066008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865c8daf57efb4d9%3A0x416a815776d5b784!2sBlack%20Rifle%20Coffee%20Company!5e0!3m2!1sen!2sus!4v1754898299171!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+
+            <div class="checkout-card" id="pickup-info-card" style="display:none;">
+              <h4>Pickup Information</h4>
+              <p><strong>The Coffee Corner</strong><br>123 Brew Lane, Universal City, TX 78148</p>
+              <p>We accept cash, credit cards, and contactless payments at pickup.</p>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" id="place-order-btn" class="btn-primary" disabled>Place Order</button>
+      </form>
+    </main>
+
+    <footer></footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+  </body>
+</html>

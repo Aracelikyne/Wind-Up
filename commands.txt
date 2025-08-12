@@ -1,0 +1,29 @@
+# ----- Development -----
+# Starts the live development server with hot-reloading.
+npm run start
+
+
+# ----- Code Quality -----
+# Automatically formats all project files for consistent style.
+npm run format
+
+# Finds potential errors and style issues in the JavaScript code.
+npm run lint
+
+# Finds and automatically fixes all fixable linting issues.
+npm run lint:fix
+
+
+# ----- Production -----
+# Creates a final, optimized build of your website in the 'dist' folder.
+npm run build
+
+# Previews the final 'dist' folder build on a local server.
+npm run preview
+
+# Run before commit to check and format everything
+npm run validate
+
+#The tree command to display directory structures. Displaying the current directory.
+    tree
+

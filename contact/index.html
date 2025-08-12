@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - The Coffee Corner</title>
+
+    <link rel="icon" type="image/png" href="/images/logo_icon/faviconM.png" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header></header>
+
+    <main class="page-container">
+      <h1>Contact Us</h1>
+      <p class="tagline">
+        Have questions about our coffees or need help with an order? We'd love to
+        hear from you! Reach out using the form below or visit us in person.
+      </p>
+
+      <section class="contact-grid">
+        <div class="contact-form-container">
+          <form id="contact-form" class="form-style">
+            <h3>Send us a message</h3>
+            <div class="form-group-inline">
+              <div class="form-group">
+                <label for="contact-name">Full Name *</label>
+                <input type="text" id="contact-name" name="fullName" required placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label for="contact-phone">Phone Number *</label>
+                <input type="tel" id="contact-phone" name="phone" required placeholder="(555) 123-4567" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address *</label>
+              <input type="email" id="contact-email" name="email" required placeholder="your.email@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" name="subject" placeholder="What's this about?" />
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message *</label>
+              <textarea id="contact-message" name="message" required placeholder="How can we help you?"></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
+        </div>
+
+        <div class="contact-info-container">
+          <div class="info-box">
+            <h3>Visit Our Coffee Shop</h3>
+            <p><strong>The Coffee Corner</strong><br />123 Brew Lane, Universal City, TX 78148</p>
+            <p><strong>Phone:</strong> (555) 123-4567</p>
+            <p><strong>Email:</strong> hello@thecoffeecorner.com</p>
+            <p><strong>Hours:</strong> Mon-Fri: 6am - 6pm<br />Sat: 7am - 7pm<br />Sun: 7am - 4pm</p>
+          </div>
+          <div class="info-box">
+            <h3>Find Us</h3>
+            <div class="map-embed">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3470.400159986274!2d-98.34443998936655!3d29.562958175066008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865c8daf57efb4d9%3A0x416a815776d5b784!2sBlack%20Rifle%20Coffee%20Company!5e0!3m2!1sen!2sus!4v1754898299171!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script type="module" src="/src/pages/contact.js"></script>
+  </body>
+</html>
