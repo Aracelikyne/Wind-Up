@@ -13,9 +13,6 @@ let isDateSelected = false;
 let isAddressValid = false;
 let deliveryMethod = 'delivery';
 
-/**
- * Updates the disabled state of the "Place Order" button based on validation status.
- */
 function updatePlaceOrderButtonState() {
   const placeOrderBtn = document.getElementById('place-order-btn');
   if (deliveryMethod === 'pickup') {
@@ -25,11 +22,6 @@ function updatePlaceOrderButtonState() {
   }
 }
 
-/**
- * Calculates and displays the order summary details.
- * @param {Array} cartItems The list of items in the cart.
- * @param {string} method The delivery method ('delivery' or 'pickup').
- */
 function renderOrderSummary(cartItems, method) {
   if (!cartItems || cartItems.length === 0) return;
 
@@ -53,31 +45,35 @@ function renderOrderSummary(cartItems, method) {
   document.getElementById('total-display').textContent = `$${total.toFixed(2)}`;
 }
 
-/**
- * Renders the calendar for pickup/delivery date selection.
- * @param {Array} bookedEvents List of Google Calendar event objects.
- */
-function renderCalendar(bookedEvents) {
+function renderCalendar(bookedEvents = []) {
   const calendarContainer = document.getElementById('calendar-container');
   if (!calendarContainer) return;
 
-  const bookedDates = (bookedEvents || []).map((event) => {
-    const date = new Date(event.start.dateTime || event.start.date);
-    return date.toISOString().split('T')[0];
-  });
-
-  const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 90);
+  const disableFunction = (date) => {
+    for (const event of bookedEvents) {
+      const startTime = new Date(event.start.dateTime);
+      const endTime = new Date(event.end.dateTime);
+      if (date >= startTime && date < endTime) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   const interval = setInterval(() => {
     if (window.flatpickr) {
       clearInterval(interval);
       flatpickr(calendarContainer, {
-        minDate: today,
-        maxDate: maxDate,
-        disable: bookedDates,
         inline: true,
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'h:i K',
+        minDate: 'today',
+        maxDate: 'today',
+        minTime: '09:00',
+        maxTime: '17:00',
+        minuteIncrement: 60,
+        disable: [disableFunction],
         onChange: () => {
           isDateSelected = true;
           updatePlaceOrderButtonState();
@@ -87,9 +83,6 @@ function renderCalendar(bookedEvents) {
   }, 100);
 }
 
-/**
- * Handles the delivery check when the user updates the address.
- */
 async function handleDeliveryCheck(cartItems) {
   const street = document.getElementById('street-address').value;
   const city = document.getElementById('city').value;
@@ -119,9 +112,6 @@ async function handleDeliveryCheck(cartItems) {
   renderOrderSummary(cartItems, 'delivery');
 }
 
-/**
- * Handles the delivery/pickup toggle and updates the UI accordingly.
- */
 function setupDeliveryToggle(cartItems) {
     const deliveryToggle = document.getElementById('delivery-toggle');
     const pickupToggle = document.getElementById('pickup-toggle');
@@ -154,9 +144,6 @@ function setupDeliveryToggle(cartItems) {
     toggle('delivery');
 }
 
-/**
- * Adds a listener to the Place Order button to show alerts if it's disabled.
- */
 function setupPlaceOrderButtonListener() {
   const placeOrderBtn = document.getElementById('place-order-btn');
   placeOrderBtn.addEventListener('click', () => {
@@ -170,9 +157,6 @@ function setupPlaceOrderButtonListener() {
   });
 }
 
-/**
- * Handles the final form submission.
- */
 async function handleFormSubmission(event) {
     event.preventDefault();
     const form = document.getElementById('checkout-form');
@@ -188,7 +172,7 @@ async function handleFormSubmission(event) {
         showToast('Placing your order...', 3000);
         setTimeout(() => {
             form.reset();
-            document.querySelector('main.page-container').innerHTML = '<h1>Thank You!</h1><p>Your order has been placed successfully.</p><a href="/order/" class="btn-primary">Continue Shopping</a>';
+            window.location.href = '/thankyou/';
         }, 3000);
     } else {
         form.reportValidity();
@@ -196,9 +180,6 @@ async function handleFormSubmission(event) {
     }
 }
 
-/**
- * Initializes the checkout page.
- */
 async function initializeCheckoutPage() {
     await loadHeaderFooter();
     highlightActiveLink();

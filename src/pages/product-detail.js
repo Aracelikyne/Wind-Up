@@ -12,10 +12,6 @@ import { checkDeliveryRange } from '../api/maps-api.js';
 let allProducts = [];
 const CART_KEY = 'so-cart';
 
-/**
- * Renders the product's details into the page, including availability and delivery check sections.
- * @param {object} product The product object to display.
- */
 function renderProductDetails(product) {
   const container = document.querySelector('#product-detail-container');
   container.innerHTML = `
@@ -42,8 +38,8 @@ function renderProductDetails(product) {
 
         <div class="availability-delivery-wrapper">
           <div id="availability-section">
-            <h4>Availability</h4>
-            <p class="availability-subtitle">Booked days are disabled.</p>
+            <h4>Select a Time for Today</h4>
+            <p class="availability-subtitle">Booked time slots are disabled.</p>
             <div id="calendar-container"></div>
           </div>
 
@@ -69,39 +65,40 @@ function renderProductDetails(product) {
   `;
 }
 
-/**
- * Initializes a flatpickr calendar and disables days that are already booked.
- * @param {Array} bookedEvents List of Google Calendar event objects.
- */
-function renderCalendar(bookedEvents) {
+function renderCalendar(bookedEvents = []) {
   const calendarContainer = document.querySelector('#calendar-container');
   if (!calendarContainer) return;
 
-  const bookedDates = (bookedEvents || []).map((event) => {
-    const date = new Date(event.start.dateTime || event.start.date);
-    return date.toISOString().split('T')[0];
-  });
-
-  const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 90);
+  const disableFunction = (date) => {
+    for (const event of bookedEvents) {
+      const startTime = new Date(event.start.dateTime);
+      const endTime = new Date(event.end.dateTime);
+      if (date >= startTime && date < endTime) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   const interval = setInterval(() => {
     if (window.flatpickr) {
       clearInterval(interval);
       flatpickr(calendarContainer, {
-        minDate: today,
-        maxDate: maxDate,
-        disable: bookedDates,
         inline: true,
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'h:i K',
+        minDate: 'today',
+        maxDate: 'today',
+        minTime: '09:00',
+        maxTime: '17:00',
+        minuteIncrement: 60,
+        disable: [disableFunction],
       });
     }
   }, 100);
 }
 
-/**
- * Attaches an event listener to the delivery check form to handle submissions.
- */
 function setupDeliveryCheck() {
   const form = document.querySelector('#delivery-check-form');
   if (form) {
@@ -131,10 +128,6 @@ function setupDeliveryCheck() {
   }
 }
 
-/**
- * Adds an item with the selected quantity to the cart in localStorage.
- * @param {string} productId The ID of the product to add.
- */
 function addToCart(productId) {
   let cart = getLocalStorage(CART_KEY) || [];
   const quantity = parseInt(document.querySelector('#quantity-input').value);
@@ -164,9 +157,6 @@ function addToCart(productId) {
   );
 }
 
-/**
- * Sets up the event listeners for the quantity +/- buttons.
- */
 function setupQuantitySelector() {
   const minusBtn = document.querySelector('.quantity-btn.minus');
   const plusBtn = document.querySelector('.quantity-btn.plus');
@@ -185,9 +175,6 @@ function setupQuantitySelector() {
   });
 }
 
-/**
- * Main initialization function for the page.
- */
 async function initializeProductDetailPage() {
   await loadHeaderFooter();
   highlightActiveLink();
